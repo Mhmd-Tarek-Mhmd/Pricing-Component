@@ -5,7 +5,7 @@ This is a solution to the [Pricing component with toggle challenge on Frontend M
 ## Links
 
 - Live Site [URL](https://mhmd-tarek-mhmd.github.io/Pricing-Component)
-- Solution [URL](https://www.frontendmentor.io/solutions/pricing-component-)
+- Solution [URL](https://www.frontendmentor.io/solutions/a-pricing-component-with-mvc-javascript-Rpa-LxdYp)
 
 ## Screenshots
 
