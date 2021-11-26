@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Pricing Component" />
+    <title>Pricing Component</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap"
+    />
+
+    <style>
+      /*
+      ** Global styles
+      */
+      :root {
+        --main: hsl(0, 0%, 100%);
+        --alt: linear-gradient(
+          to right,
+          hsl(236, 72%, 79%),
+          hsl(237, 63%, 64%)
+        );
+      }
+      body {
+        margin: 0;
+        padding: 65px 0;
+        overflow-x: hidden;
+        text-align: center;
+        color: hsl(233, 13%, 49%);
+        background: hsl(240, 78%, 98%);
+        font: 700 15px "Montserrat", sans-serif;
+      }
+      body::before,
+      body::after {
+        position: absolute;
+        z-index: -1;
+      }
+      body::before {
+        top: 0;
+        content: url(images/bg-top.svg);
+      }
+      body::after {
+        left: 0;
+        bottom: 0;
+      }
+      @media (min-width: 992px) {
+        body::before {
+          right: 0;
+        }
+        body::after {
+          content: url(images/bg-bottom.svg);
+        }
+      }
+
+      /*
+      ** Header area
+      */
+      header h1 {
+        margin: 0;
+      }
+      header > div {
+        display: flex;
+        margin: 48px 0 80px;
+        align-items: center;
+        justify-content: center;
+        color: hsl(234, 14%, 74%);
+      }
+      @media (min-width: 992px) {
+        header > div {
+          margin-bottom: 88px;
+        }
+      }
+      header button {
+        width: 56px;
+        height: 32px;
+        border: none;
+        padding: 4px;
+        margin: 0 25px;
+        cursor: pointer;
+        border-radius: 20px;
+        background: var(--alt);
+        will-change: opacity;
+        transition: opacity 0.3s;
+      }
+      header button:hover {
+        opacity: 0.8;
+      }
+      header button span {
+        width: 24px;
+        height: 24px;
+        display: block;
+        border-radius: 50%;
+        pointer-events: none;
+        background-color: var(--main);
+      }
+      header button span.monthly {
+        float: right;
+      }
+
+      /*
+      ** Main area
+      */
+      main {
+        gap: 30px;
+        display: grid;
+        justify-content: center;
+        grid-template-columns: repeat(auto-fill, 300px);
+      }
+      @media (min-width: 1200px) {
+        main {
+          gap: 0;
+          grid-template-columns: repeat(3, 350px);
+        }
+      }
+
+      .card {
+        border-radius: 10px;
+        padding: 38px 24px 0;
+      }
+      .card ul {
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid;
+      }
+      .card li {
+        padding: 15px 0;
+        border-bottom: 1px solid;
+      }
+      .card a {
+        height: 44px;
+        margin: 31px 0;
+        display: block;
+        line-height: 44px;
+        border-radius: 10px;
+        letter-spacing: 2px;
+        text-decoration: none;
+        transition: background 0.3s;
+        border: 1px solid transparent;
+        will-change: background, border-color;
+      }
+      .card a:hover {
+        border-color: inherit;
+      }
+      .card .plan-name {
+        font-size: 1.2em;
+        text-transform: capitalize;
+      }
+      .card .plan-price {
+        padding: 20px 0;
+        font-size: 4.3em;
+      }
+
+      /* [1] Odd Cards */
+      .card:nth-child(odd) {
+        background-color: var(--main);
+      }
+      .card:nth-child(odd) ul,
+      .card:nth-child(odd) li {
+        border-color: hsl(234, 14%, 74%);
+      }
+      .card:nth-child(odd) a,
+      .card:nth-child(even) a:hover {
+        color: var(--main);
+        background: var(--alt);
+      }
+      .card:nth-child(odd) .plan-price {
+        color: hsl(232, 13%, 33%);
+      }
+
+      /* [2] Even Cards */
+      .card:nth-child(even) {
+        color: #fff;
+        background: var(--alt);
+      }
+      @media (min-width: 1200px) {
+        .card:nth-child(even) {
+          transform: scale(1.05);
+        }
+      }
+      .card:nth-child(even) a,
+      .card:nth-child(odd) a:hover {
+        background: var(--main);
+        color: hsl(237, 63%, 64%);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Our Pricing</h1>
+      <div>
+        <span>Annually</span>
+        <button aria-label="Show monthly prices">
+          <span class="monthly"></span>
+        </button>
+        <span>Monthly</span>
+      </div>
+    </header>
+
+    <main></main>
+
+    <script>
+      const $ = document.querySelector.bind(document);
+
+      (function () {
+        const Model = {
+          currentPlan: "monthly",
+          plans: {
+            annually: {
+              basic: 199.99,
+              professional: 249.99,
+              master: 399.99,
+            },
+            monthly: {
+              basic: 19.99,
+              professional: 24.99,
+              master: 39.99,
+            },
+          },
+          advantages: {
+            basic: ["500 GB Storage", "2 Users Allowed", "Send up to 3 GB"],
+            professional: [
+              "1 TB Storage",
+              "5 Users Allowed",
+              "Send up to 10 GB",
+            ],
+            master: ["2 TB Storage", "10 Users Allowed", "Send up to 20 GB"],
+          },
+        };
+
+        const Controller = {
+          getPlans: () => Model.plans,
+          getPlansNames: () => Object.keys(Model.advantages),
+          getMonthlyPrices: () => Model.plans.monthly,
+          getAnnuallyPrices: () => plans.annually,
+          getPlansAdvantages: () => Model.advantages,
+
+          getCurrentPlan: () => Model.currentPlan,
+          setCurrentPlan: function (plan) {
+            Model.currentPlan = plan;
+            Views.render();
+          },
+
+          init: function () {
+            Views.init();
+          },
+        };
+
+        const Views = {
+          init: function () {
+            const names = Controller.getPlansNames();
+            const monthlyPrices = Controller.getMonthlyPrices();
+            const plansAdvantages = Controller.getPlansAdvantages();
+
+            /*
+             ** Cards
+             */
+            names.forEach((name, i) => {
+              // [1] Card Top
+              $("main").innerHTML += `
+                <div class="card ${name}">
+                  <div class="card-top">
+                    <div class="plan-name">${name}</div>
+                    <div class="plan-price">
+                      <small>&dollar;</small><span>${monthlyPrices[name]}</span>
+                    </div>
+                  </div>
+
+                  <ul class="card-body"></ul>
+                  <a href="#">Learn More</a>
+                </div>
+              `;
+
+              // [2] Card Body
+              plansAdvantages[name].forEach(
+                (n) => ($(`.${name} .card-body`).innerHTML += `<li>${n}</li>`)
+              );
+            });
+
+            /*
+             ** Toggle Button
+             */
+            $("header button").onclick = (e) => {
+              e.target.firstElementChild.classList.toggle("monthly");
+
+              if (Controller.getCurrentPlan() === "monthly") {
+                Controller.setCurrentPlan("annually");
+                e.target.ariaLabel = "Show annually prices";
+              } else {
+                Controller.setCurrentPlan("monthly");
+                e.target.ariaLabel = "Show monthly prices";
+              }
+            };
+          },
+
+          render: function () {
+            const plans = Controller.getPlans();
+            const names = Controller.getPlansNames();
+            const currentPlan = Controller.getCurrentPlan();
+            const prices = Object.values(plans[currentPlan]);
+
+            prices.forEach(
+              (price, i) =>
+                ($(`.${names[i]} .plan-price span`).innerHTML = price)
+            );
+          },
+        };
+
+        Controller.init();
+      })();
+    </script>
+  </body>
+</html>
